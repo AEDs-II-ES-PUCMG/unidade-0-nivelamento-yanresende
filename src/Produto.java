@@ -6,8 +6,8 @@ public class Produto {
 
 	private static final double MARGEM_PADRAO = 0.2;
 	protected String descricao;
-	private double precoCusto;
-	private double margemLucro;
+	protected double precoCusto;
+	protected double margemLucro;
 
 	/**
 	 * Inicializador privado. Os valores default, em caso de erro, são:
@@ -74,7 +74,7 @@ public class Produto {
 
 		NumberFormat moeda = NumberFormat.getCurrencyInstance();
 
-		return String.format("NOME: " + descricao + ": " + moeda.format(valorDeVenda()));
+		return String.format("NOME: " + descricao + " - " + moeda.format(valorDeVenda()));
 	}
 
 	/**
