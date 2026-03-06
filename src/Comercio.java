@@ -107,7 +107,18 @@ public class Comercio {
      * mensagem padrão
      */
     static void localizarProdutos() {
-        // TO DO
+        System.out.print("Digite o nome do produto para pesquisar: ");
+        String nome = teclado.nextLine();
+        boolean encontrou = false;
+        for (int i = 0; i < quantosProdutos; i++) {
+            if (produtosCadastrados[i] != null && produtosCadastrados[i].descricao.toLowerCase().contains(nome.toLowerCase())) {
+                System.out.println("Produto encontrado: " + produtosCadastrados[i].toString());
+                encontrou = true;
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Produto não encontrado.");
+        }
     }
 
     /**
@@ -121,7 +132,49 @@ public class Comercio {
      * Factory Method para criação dos objetos.
      */
     static void cadastrarProduto() {
-        // TO DO
+        if (quantosProdutos >= produtosCadastrados.length) {
+            System.out.println("Capacidade de armazenamento cheia.");
+            return;
+        }
+
+        System.out.println("--- Cadastro de Produto ---");
+        System.out.println("1 - Produto Não Perecível");
+        System.out.println("2 - Produto Perecível");
+        System.out.print("Digite o tipo do produto: ");
+
+        try {
+            int tipo = Integer.parseInt(teclado.nextLine());
+
+            System.out.print("Descrição: ");
+            String descricao = teclado.nextLine();
+
+            System.out.print("Preço de Custo: ");
+            double preco = Double.parseDouble(teclado.nextLine().replace(",", "."));
+
+            System.out.print("Margem de Lucro: ");
+            double margem = Double.parseDouble(teclado.nextLine().replace(",", "."));
+
+            Produto novoProduto;
+
+            if (tipo == 1) {
+                novoProduto = new ProdutoNaoPerecivel(descricao, preco, margem);
+            } else if (tipo == 2) {
+                System.out.print("Data de Validade (dd/MM/yyyy): ");
+                String dataStr = teclado.nextLine();
+                LocalDate validade = LocalDate.parse(dataStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                novoProduto = new ProdutoPerecivel(descricao, preco, margem, validade);
+            } else {
+                System.out.println("Tipo de produto inválido.");
+                return;
+            }
+
+            produtosCadastrados[quantosProdutos] = novoProduto;
+            quantosProdutos++;
+            System.out.println("Produto cadastrado com sucesso!");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao cadastrar produto: " + e.getMessage());
+        }
     }
 
     /**
@@ -131,7 +184,17 @@ public class Comercio {
      * @param nomeArquivo Nome do arquivo a ser gravado.
      */
     public static void salvarProdutos(String nomeArquivo) {
-        // TO DO
+        try (FileWriter writer = new FileWriter(nomeArquivo, Charset.forName("UTF-8"))) {
+            writer.write(quantosProdutos + "\n");
+            for (int i = 0; i < quantosProdutos; i++) {
+                if (produtosCadastrados[i] != null) {
+                    writer.write(produtosCadastrados[i].gerarDadosTexto() + "\n");
+                }
+            }
+            System.out.println("Dados salvos com sucesso.");
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar os dados: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) throws Exception {

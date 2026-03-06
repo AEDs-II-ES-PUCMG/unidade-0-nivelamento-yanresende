@@ -108,29 +108,6 @@ public class Produto {
 	}
 
 	/**
-	 * Cria um produto a partir de uma linha de dados em formato texto. A linha de
-	 * dados deve estar de acordo com a
-	 * formatação
-	 * "tipo; descrição;preçoDeCusto;margemDeLucro;[dataDeValidade]"
-	 * ou o funcionamento não será garantido. Os tipos são 1 para produto não
-	 * perecível e 2 para perecível.
-	 * 
-	 * @param linha Linha com os dados do produto a ser criado.
-	 * @return Um produto com os dados recebidos
-	 */
-	static Produto criarDoTexto(String linha) {
-		Produto novoProduto = null;
-		/*
-		 * Você deve implementar aqui a lógica que separa os dados existentes na String
-		 * linha, verifica se o produto é do
-		 * tipo 1 ou 2 e constrói o objeto adequado, com os dados fornecidos de acordo
-		 * com seu tipo. O objeto construído é
-		 * retornado pelo método
-		 */
-		return novoProduto;
-	}
-
-	/**
 	 * Gera uma linha de texto a partir dos dados do produto. Preço e margem de
 	 * lucro vão formatados com 2 casas
 	 * decimais.
